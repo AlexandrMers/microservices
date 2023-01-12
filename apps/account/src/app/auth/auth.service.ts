@@ -1,3 +1,4 @@
+import { JwtService } from '@nestjs/jwt';
 import { Injectable } from '@nestjs/common';
 
 import { UserRepository } from '../user/repositories/user.repository';
@@ -12,7 +13,10 @@ import { ALREADY_HAVE_USER_ERROR } from './auth.constants';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly userRepository: UserRepository) {}
+  constructor(
+    private readonly userRepository: UserRepository,
+    private readonly jwtService: JwtService
+  ) {}
 
   public async register(dto: RegisterDto) {
     const oldUser = this.userRepository.findUser(dto.email);
@@ -45,5 +49,11 @@ export class AuthService {
     }
 
     return { id: user._id };
+  }
+
+  async login(id: string) {
+    return {
+      access_token: await this.jwtService.signAsync({ id }),
+    };
   }
 }
