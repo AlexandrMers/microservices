@@ -6,7 +6,6 @@ import { UserRole } from '@courses/interfaces';
 
 import { UserEntity } from '../user/entities/user.entity';
 
-import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
 
 import { ALREADY_HAVE_USER_ERROR } from './auth.constants';
@@ -26,12 +25,25 @@ export class AuthService {
       displayName: dto.displayName,
       email: dto.email,
       role: UserRole.STUDENT,
+      passwordHash: '',
     }).setPassword(dto.password);
 
     return this.userRepository.createUser(newUserData);
   }
 
-  public async login(dto: LoginDto) {
-    return Promise.resolve();
+  public async validateUser(email: string, passwordHash: string) {
+    const user = await this.userRepository.findUser(email);
+    if (!user) {
+      throw new Error('Неверный логин или пароль');
+    }
+
+    const userEntity = new UserEntity(user);
+    const isCorrectPassword = userEntity.validatePassword(passwordHash);
+
+    if (!isCorrectPassword) {
+      throw new Error('Неверный логин или пароль');
+    }
+
+    return { id: user._id };
   }
 }
