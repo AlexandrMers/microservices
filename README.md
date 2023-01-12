@@ -1,5 +1,8 @@
 # Courses
 
+## Architecture of this application - [link](https://www.figma.com/file/LATgKI3LkVhc6LyMFp6Kqd/Microservices---learning?node-id=0%3A1&t=OjjjvqMizZskAJJb-0)
+
+
 ## This is a pet project for learning microservices concept
 
 <a href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
