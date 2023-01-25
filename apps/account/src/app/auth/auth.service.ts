@@ -9,7 +9,10 @@ import { UserEntity } from '../user/entities/user.entity';
 
 import { RegisterDto } from './dto/register.dto';
 
-import { ALREADY_HAVE_USER_ERROR } from './auth.constants';
+import {
+  ALREADY_HAVE_USER_ERROR,
+  WRONG_PASSWORD_OR_LOGIN_ERROR,
+} from './auth.constants';
 
 @Injectable()
 export class AuthService {
@@ -38,14 +41,14 @@ export class AuthService {
   public async validateUser(email: string, passwordHash: string) {
     const user = await this.userRepository.findUser(email);
     if (!user) {
-      throw new Error('Неверный логин или пароль');
+      throw new Error(WRONG_PASSWORD_OR_LOGIN_ERROR);
     }
 
     const userEntity = new UserEntity(user);
     const isCorrectPassword = userEntity.validatePassword(passwordHash);
 
     if (!isCorrectPassword) {
-      throw new Error('Неверный логин или пароль');
+      throw new Error(WRONG_PASSWORD_OR_LOGIN_ERROR);
     }
 
     return { id: user._id };
