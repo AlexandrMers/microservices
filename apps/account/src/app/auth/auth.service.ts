@@ -1,13 +1,13 @@
 import { JwtService } from '@nestjs/jwt';
 import { Injectable } from '@nestjs/common';
 
+import { UserEntity } from '../user/entities/user.entity';
+
 import { UserRepository } from '../user/repositories/user.repository';
 
 import { UserRole } from '@courses/interfaces';
 
-import { UserEntity } from '../user/entities/user.entity';
-
-import { RegisterDto } from './dto/register.dto';
+import { AccountRegister } from '@courses/contracts';
 
 import {
   ALREADY_HAVE_USER_ERROR,
@@ -21,7 +21,9 @@ export class AuthService {
     private readonly jwtService: JwtService
   ) {}
 
-  public async register(dto: RegisterDto) {
+  public async register(
+    dto: AccountRegister.Request
+  ): Promise<AccountRegister.Response> {
     const oldUser = this.userRepository.findUser(dto.email);
 
     if (oldUser) {
@@ -35,7 +37,11 @@ export class AuthService {
       passwordHash: '',
     }).setPassword(dto.password);
 
-    return this.userRepository.createUser(newUserData);
+    const { email, displayName } = await this.userRepository.createUser(
+      newUserData
+    );
+
+    return { email, displayName };
   }
 
   public async validateUser(email: string, passwordHash: string) {
