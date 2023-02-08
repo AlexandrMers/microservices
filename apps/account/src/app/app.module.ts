@@ -10,9 +10,16 @@ import { AuthModule } from './auth/auth.module';
 import { getMongoConfig } from './configs/mongo.config';
 import { getRmqConfig } from './configs/rmq.config';
 
+// Validation Schema of Joi
+import { ValidationSchemaOfEnvVariables } from './validations/env.validation';
+
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true, envFilePath: 'envs/.account.env' }),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: 'envs/.account.env',
+      validationSchema: ValidationSchemaOfEnvVariables,
+    }),
     RMQModule.forRootAsync(getRmqConfig()),
     UserModule,
     AuthModule,
