@@ -6,6 +6,7 @@ export namespace AccountRegister {
   export class Request {
     @IsEmail()
     email: string;
+
     @IsString()
     password: string;
 
