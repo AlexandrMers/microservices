@@ -14,7 +14,6 @@ export const getRmqConfig = (): IRMQServiceAsyncOptions => ({
         host: configService.get<string>('AMQP_HOST'),
       },
     ],
-    queueName: configService.get<string>('AMQP_QUEUE'),
     prefetchCount: 32,
     serviceName: 'account',
     assertExchangeType: 'topic',

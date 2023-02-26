@@ -9,5 +9,4 @@ export const ValidationSchemaOfEnvVariables = Joi.object({
   AMQP_USER: Joi.string().required(),
   AMQP_PASSWORD: Joi.string().required(),
   AMQP_HOST: Joi.string().required(),
-  AMQP_QUEUE: Joi.string().required(),
 });

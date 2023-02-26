@@ -24,7 +24,7 @@ export class AuthService {
   public async register(
     dto: AccountRegister.Request
   ): Promise<AccountRegister.Response> {
-    const oldUser = this.userRepository.findUser(dto.email);
+    const oldUser = await this.userRepository.findUser(dto.email);
 
     if (oldUser) {
       throw new Error(ALREADY_HAVE_USER_ERROR);
