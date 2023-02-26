@@ -10,6 +10,6 @@ export class UserController {
   @UseGuards(JwtGuard)
   @Get('info')
   async info(@UserId() userId: string) {
-    return userId;
+    return { userId };
   }
 }

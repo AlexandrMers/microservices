@@ -2,6 +2,9 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { RMQModule } from 'nestjs-rmq';
 import { JwtModule } from '@nestjs/jwt';
+import { PassportModule } from '@nestjs/passport';
+
+import { JwtStrategy } from './strategies/jwt.strategy';
 
 import { ValidationSchemaOfEnvVariables } from './validations/env.validation';
 
@@ -10,7 +13,6 @@ import { UserController } from './controllers/user.controller';
 
 import { getRmqConfig } from './configs/rmq.config';
 import { getJwtConfig } from './configs/jwt.config';
-import { PassportModule } from '@nestjs/passport';
 
 @Module({
   imports: [
@@ -23,6 +25,7 @@ import { PassportModule } from '@nestjs/passport';
     JwtModule.registerAsync(getJwtConfig()),
     PassportModule,
   ],
+  providers: [JwtStrategy],
   controllers: [AuthController, UserController],
 })
 export class AppModule {}
