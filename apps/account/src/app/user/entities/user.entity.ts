@@ -1,6 +1,6 @@
 import { compare, genSalt, hash } from 'bcrypt';
 
-import { IUser, UserRole } from '@courses/interfaces';
+import { IUser, IUserCourses, UserRole } from '@courses/interfaces';
 
 export class UserEntity implements IUser {
   _id: string;
@@ -8,6 +8,7 @@ export class UserEntity implements IUser {
   email: string;
   passwordHash: string;
   role: UserRole;
+  courses?: IUserCourses[];
 
   constructor(user: IUser) {
     this._id = user._id;
@@ -15,6 +16,7 @@ export class UserEntity implements IUser {
     this.passwordHash = user.passwordHash;
     this.email = user.email;
     this.role = user.role;
+    this.courses = user.courses;
   }
 
   public async setPassword(password: string) {
