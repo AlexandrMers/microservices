@@ -1,7 +1,7 @@
 import { Document, Types } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
-import { UserCourses } from './user-course.module';
+import { UserCourses, UserCoursesSchema } from './user-course.module';
 
 import { IUser, UserRole } from '@courses/interfaces';
 
@@ -29,7 +29,7 @@ export class User extends Document implements IUser {
   role: UserRole;
 
   @Prop({
-    type: [UserCourses],
+    type: [UserCoursesSchema],
   })
   courses: Types.Array<UserCourses>;
 }
